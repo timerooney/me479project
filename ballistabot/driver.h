@@ -4,6 +4,8 @@
 #include "Arduino.h"
 #include "Servo.h"
 
+extern int CLOCKWISE, COUNTERCLOCKWISE;
+
 class Driver {
 public:
   Driver(int leftMotorPin, int rightMotorPin);

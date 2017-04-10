@@ -2,6 +2,9 @@
 #include "Servo.h"
 #include "driver.h"
 
+int CLOCKWISE = 1;
+int COUNTERCLOCKWISE = -1;
+
 Driver::Driver(int leftMotorPin, int rightMotorPin) {
   _leftMotor.attach(leftMotorPin, 1000, 2000);
   _rightMotor.attach(rightMotorPin, 1000, 2000);
