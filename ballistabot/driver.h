@@ -5,6 +5,7 @@
 #include "Servo.h"
 
 extern int CLOCKWISE, COUNTERCLOCKWISE;
+extern int FORWARD, BACKWARD;
 
 class Driver {
 public:

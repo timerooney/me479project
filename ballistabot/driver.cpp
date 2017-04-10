@@ -4,6 +4,8 @@
 
 int CLOCKWISE = 1;
 int COUNTERCLOCKWISE = -1;
+int FORWARD = 1;
+int BACKWARD = 1;
 
 Driver::Driver(int leftMotorPin, int rightMotorPin) {
   _leftMotor.attach(leftMotorPin, 1000, 2000);
