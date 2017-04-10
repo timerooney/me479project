@@ -11,8 +11,9 @@ public:
   void backward(float speed);
   void turn(int direction, float speed);
   void stop();
+
 private:
-  int _floatToSpeed(float speed);
+  int _floatToSpeed(int direction, float speed);
   int _leftMotorPin, _rightMotorPin;
   int _currentCommand, _currentSpeed;
   Servo _leftMotor;

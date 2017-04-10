@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "Servo.h"
-#include "Driver.h"
+#include "driver.h"
 
 Driver::Driver(int leftMotorPin, int rightMotorPin) {
   _leftMotor.attach(leftMotorPin, 1000, 2000);
@@ -12,10 +12,10 @@ Driver::Driver(int leftMotorPin, int rightMotorPin) {
   Driver::stop();
 }
 
-int Driver::_floatToSpeed(int direction, float speed) {
+int _floatToSpeed(int direction, float speed) {
   int integerSpeed;
   integerSpeed = map(speed, 0.0, 1.0, 0, 90);
-  if direction == 1 {
+  if (direction == 1) {
     return (int) integerSpeed + 90;
   } else {
     return 90 - (int) integerSpeed;
@@ -44,8 +44,8 @@ void Driver::backward(float speed) {
 
 void Driver::turn(int direction, float speed) {
   int leftSpeed, rightSpeed;
-  leftSpeed = Driver::_floatToSpeed(direction, speed);
-  rightSpeed = Driver::_floatToSpeed(-1*direction, speed);
+  leftSpeed = _floatToSpeed(direction, speed);
+  rightSpeed = _floatToSpeed(-1*direction, speed);
   _leftMotor.write(leftSpeed);
   _rightMotor.write(rightSpeed);
 }
