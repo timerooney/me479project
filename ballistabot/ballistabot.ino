@@ -17,4 +17,6 @@ void loop() {
   delay(3000);
   driver.backward(0.5);
   delay(3000);
+  driver.turn(CLOCKWISE, 0.5);
+  delay(3000);
 }

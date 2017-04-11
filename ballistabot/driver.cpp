@@ -37,13 +37,13 @@ void Driver::stop() {
 }
 
 void Driver::forward(float speed) {
-  int integerSpeed = Driver::_floatToSpeed(1, speed);
+  int integerSpeed = Driver::_floatToSpeed(FORWARD, speed);
   _leftMotor.write(integerSpeed);
   _rightMotor.write(integerSpeed);
 }
 
 void Driver::backward(float speed) {
-  int integerSpeed = Driver::_floatToSpeed(-1, speed);
+  int integerSpeed = Driver::_floatToSpeed(BACKWARD, speed);
   _leftMotor.write(integerSpeed);
   _rightMotor.write(integerSpeed);
 }
