@@ -13,6 +13,7 @@ public:
   void forward(float speed);
   void backward(float speed);
   void turn(int direction, float speed);
+  void init();
   void stop();
 
 private:

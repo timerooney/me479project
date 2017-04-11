@@ -5,25 +5,26 @@
 int CLOCKWISE = 1;
 int COUNTERCLOCKWISE = -1;
 int FORWARD = 1;
-int BACKWARD = 1;
+int BACKWARD = -1;
 
 Driver::Driver(int leftMotorPin, int rightMotorPin) {
-  _leftMotor.attach(leftMotorPin, 1000, 2000);
-  _rightMotor.attach(rightMotorPin, 1000, 2000);
-
   _leftMotorPin = leftMotorPin;
   _rightMotorPin = rightMotorPin;
 
   Driver::stop();
 }
 
-int _floatToSpeed(int direction, float speed) {
-  int integerSpeed;
-  integerSpeed = map(speed, 0.0, 1.0, 0, 90);
+void Driver::init() {
+  _leftMotor.attach(_leftMotorPin, 1000, 2000);
+  _rightMotor.attach(_rightMotorPin, 1000, 2000);
+}
+
+int Driver::_floatToSpeed(int direction, float speed) {
+  int integerSpeed = (int) (speed * 90.0);
   if (direction == 1) {
-    return (int) integerSpeed + 90;
+    return integerSpeed + 90;
   } else {
-    return 90 - (int) integerSpeed;
+    return 90 - integerSpeed;
   }
 }
 
