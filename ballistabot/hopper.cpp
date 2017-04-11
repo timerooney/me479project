@@ -17,11 +17,11 @@ void Hopper::init() {
 
 void Hopper::load() {
   _releaseMotor.write(90);
-  delay(3000);
+  delay(1000);
   _releaseMotor.write(0);
-  delay(3000);
+  delay(1000);
   _lockMotor.write(90);
-  delay(3000);
+  delay(1000);
   _lockMotor.write(0);
 }
 
