@@ -2,11 +2,9 @@
 #include "vision.h"
 #include "hopper.h"
 #include "Servo.h"
+#include "SPI.h"
+#include "Pixy.h"
 
-//Servo _leftMotor;
-//Servo _rightMotor;
-
-// Driver driver(2, 3);
 Hopper hopper(10, 12);
 
 void setup() {
@@ -15,5 +13,4 @@ void setup() {
 
 void loop() {
   delay(1000);
-  Serial.println("Hi there!");
 }
