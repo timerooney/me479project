@@ -11,17 +11,9 @@ Hopper hopper(10, 12);
 
 void setup() {
   Serial.begin(9600);
-  // driver.init();
-  hopper.init();
 }
 
 void loop() {
-//  driver.forward(0.5);
-//  delay(3000);
-//  driver.backward(0.5);
-//  delay(3000);
-//  driver.turn(CLOCKWISE, 0.5);
-//  delay(3000);
-  delay(5000);
-  hopper.load();
+  delay(1000);
+  Serial.println("Hi there!");
 }
