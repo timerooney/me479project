@@ -1,12 +1,12 @@
 #include "Arduino.h"
 #include "Servo.h"
-#include "safetysensor.h"
+#include "distancesensor.h"
 
-SafetySensor::SafetySensor(int pingPin) {
+DistanceSensor::DistanceSensor(int pingPin) {
   _pingPin = pingPin;
 }
 
-long SafetySensor::read() {
+long DistanceSensor::read() {
   // The PING))) is triggered by a HIGH pulse of 2 or more microseconds.
   // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
   pinMode(_pingPin, OUTPUT);
@@ -27,7 +27,7 @@ long SafetySensor::read() {
   return _inches;
 }
 
-long SafetySensor::_microsecondsToInches(long microseconds) {
+long DistanceSensor::_microsecondsToInches(long microseconds) {
   // According to Parallax's datasheet for the PING))), there are
   // 73.746 microseconds per inch (i.e. sound travels at 1130 feet per
   // second).  This gives the distance travelled by the ping, outbound

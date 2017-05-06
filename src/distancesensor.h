@@ -1,12 +1,12 @@
-#ifndef SafetySensor_h
-#define SafetySensor_h
+#ifndef DistanceSensor_h
+#define DistanceSensor_h
 
 #include "Arduino.h"
 #include "Servo.h"
 
-class SafetySensor {
+class DistanceSensor {
 public:
-  SafetySensor(int pingPin);
+  DistanceSensor(int pingPin);
   long read();
 private:
   long _microsecondsToInches(long microseconds);
