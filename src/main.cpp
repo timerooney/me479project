@@ -15,7 +15,6 @@ void setup() {
 }
 
 void loop() {
-  delay(1000);
   safety_distance = safety_sensor.read();
   winding_distance = winding_sensor.read();
   Serial.println(safety_distance);
