@@ -1,8 +1,8 @@
 #include "driver.h"
 #include "vision.h"
-#include "hopper.h"
-#include "distancesensormock.h"
-#include "windingmotor.h"
+#include "dev/hopper.h"
+#include "mocks/distancesensormock.h"
+#include "dev/windingmotor.h"
 #include "Servo.h"
 
 // Set up hopper

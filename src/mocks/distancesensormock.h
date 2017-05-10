@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 #include "Servo.h"
-#include "distancesensor.h"
+#include "../dev/distancesensor.h"
 
 class DistanceSensorMock : DistanceSensor {
 public:
