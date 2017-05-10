@@ -2,6 +2,7 @@
 #include "vision.h"
 #include "hopper.h"
 #include "distancesensor.h"
+#include "windingmotor.h"
 #include "Servo.h"
 
 // Set up hopper
@@ -13,19 +14,24 @@ DistanceSensor winding_sensor(8);
 long safety_distance = 100;
 long winding_distance = 100;
 
+WindingMotor windingmotor(10, 9, 11);
+
 void setup() {
   Serial.begin(9600);
   // Initialize the hopper
   hopper.init();
+  windingmotor.init();
 }
 
 void loop() {
   // Read distance sensors
-  safety_distance = safety_sensor.read();
-  winding_distance = winding_sensor.read();
-  Serial.println(safety_distance);
-  Serial.println(winding_distance);
+  // safety_distance = safety_sensor.read();
+  // winding_distance = winding_sensor.read();
+  // Serial.println(safety_distance);
+  // Serial.println(winding_distance);
 
-  hopper.update();
+  // hopper.update();
+  windingmotor.windBack();
+  delay(5000);
 }
 
