@@ -7,8 +7,7 @@
 class DistanceSensor {
 public:
   DistanceSensor(int pingPin);
-  long read();
-private:
+  virtual long read(); // virtual to allow overriding
   long _microsecondsToInches(long microseconds);
   int _pingPin;
   long _duration;

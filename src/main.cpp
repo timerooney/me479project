@@ -1,7 +1,7 @@
 #include "driver.h"
 #include "vision.h"
 #include "hopper.h"
-#include "distancesensor.h"
+#include "distancesensormock.h"
 #include "windingmotor.h"
 #include "Servo.h"
 
@@ -9,8 +9,8 @@
 Hopper hopper(10, 12);
 
 // Set up ultrasonic range sensors
-DistanceSensor safety_sensor(7);
-DistanceSensor winding_sensor(8);
+DistanceSensorMock safety_sensor(7);
+DistanceSensorMock winding_sensor(8);
 long safety_distance = 100;
 long winding_distance = 100;
 
@@ -25,13 +25,13 @@ void setup() {
 
 void loop() {
   // Read distance sensors
-  // safety_distance = safety_sensor.read();
-  // winding_distance = winding_sensor.read();
-  // Serial.println(safety_distance);
-  // Serial.println(winding_distance);
+  safety_distance = safety_sensor.read();
+  winding_distance = winding_sensor.read();
+  Serial.println(safety_distance);
+  Serial.println(winding_distance);
 
   // hopper.update();
-  windingmotor.windBack();
-  delay(5000);
+  // windingmotor.windBack();
+  // delay(5000);
 }
 
