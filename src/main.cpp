@@ -3,6 +3,8 @@
 #include "dev/hopper.h"
 #include "mocks/distancesensormock.h"
 #include "dev/windingmotor.h"
+#include "SPI.h"
+#include "Pixy.h"
 #include "Servo.h"
 
 // Set up hopper
