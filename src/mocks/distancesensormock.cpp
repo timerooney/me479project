@@ -8,7 +8,7 @@ long DistanceSensorMock::read() {
   // Fake the reading delay
   delayMicroseconds(10);
 
-  _duration = ((float) random(0, 10000)) / 1000.0;
+  _duration = random(74*2*20);
 
   // convert the time into a distance
   _inches = _microsecondsToInches(_duration);

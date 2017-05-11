@@ -26,6 +26,7 @@ void setup() {
 }
 
 void loop() {
+  delay(1000);
   // Read distance sensors
   safety_distance = safety_sensor.read();
   winding_distance = winding_sensor.read();
