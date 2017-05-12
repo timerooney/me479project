@@ -10,6 +10,8 @@ public:
   void init();
   void update();
   void load();
+  int is_loaded;
+  int is_reloading;
 private:
   int _releaseMotorPin;
   int _lockMotorPin;

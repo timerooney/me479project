@@ -9,7 +9,7 @@
 #include "Servo.h"
 
 // Set up hopper
-Hopper hopper(10, 12);
+Hopper hopper(6, 7);
 
 // Set up pixycam
 Pixy pixy;
@@ -47,8 +47,23 @@ void loop() {
     driver.turn(COUNTERCLOCKWISE, 0.3);
   } else if (x_pos >= 0) {
     driver.forward(0.25);
+    // Fire if possible
+    if (hopper.is_loaded == 1) {
+      driver.stop();
+      Serial.println("Fire!");
+      hopper.is_loaded = 0;
+    }
   } else {
     driver.stop();
   }
+  
+  // Reload the hopper if it is not loaded
+  if (hopper.is_loaded == 0 && hopper.is_reloading == 0) {
+    Serial.println("Reloading...");
+    hopper.load();
+  }
+
+  // Refresh devices as needed
+  hopper.update();
 }
 
