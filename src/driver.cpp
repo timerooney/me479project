@@ -2,8 +2,8 @@
 #include "Servo.h"
 #include "driver.h"
 
-int CLOCKWISE = 1;
-int COUNTERCLOCKWISE = -1;
+int CLOCKWISE = -1;
+int COUNTERCLOCKWISE = 1;
 int FORWARD = 1;
 int BACKWARD = -1;
 

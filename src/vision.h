@@ -9,6 +9,7 @@ public:
   Vision(Pixy pixy);
   void init();
   int get_x_pos();
+  unsigned long last_seen_time;
   
 private:
   unsigned int _blocks;

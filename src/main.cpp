@@ -38,15 +38,20 @@ void setup() {
 }
 
 void loop() {
+  // Delay for timing
   delay(100);
+
+  // Get x position of target
   x_pos = vision.get_x_pos();
   Serial.println(x_pos);
+
+  // Driver logic
   if (x_pos < 160 && x_pos >= 0) {
-    driver.turn(CLOCKWISE, 0.3);
-  } else if (x_pos > 200) {
     driver.turn(COUNTERCLOCKWISE, 0.3);
+  } else if (x_pos > 200) {
+    driver.turn(CLOCKWISE, 0.3);
   } else if (x_pos >= 0) {
-    driver.forward(0.25);
+    driver.forward(0.3);
     // Fire if possible
     if (hopper.is_loaded == 1) {
       driver.stop();
@@ -54,7 +59,12 @@ void loop() {
       hopper.is_loaded = 0;
     }
   } else {
-    driver.stop();
+    // Search if more than 5 seconds have passed since the last time seen
+    if (vision.last_seen_time < (millis() - 5000)) {
+      driver.turn(CLOCKWISE, 0.3);
+    } else {
+      driver.stop();
+    }
   }
   
   // Reload the hopper if it is not loaded
