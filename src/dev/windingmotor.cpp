@@ -15,14 +15,18 @@ void WindingMotor::init() {
 }
 
 void WindingMotor::windBack() {
-  _setMotor(255, 0);
+  _setMotor(70, 0);
   delay(1000);
   _setMotor(0, 0);
+  delay(1000);
+  _setMotor(70, 1);
+  delay(1000);
+  _setMotor(0, 0);
+  delay(1000);
 }
 
 void WindingMotor::_setMotor(int speed, int reverse) {
-  digitalWrite(_enablePin, 0);
-  //analogWrite(_enablePin, speed);
+  analogWrite(_enablePin, speed);
   digitalWrite(_dir1Pin, !reverse);
   digitalWrite(_dir2Pin, reverse);
 }
