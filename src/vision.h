@@ -2,25 +2,17 @@
 #define Vision_h
 
 #include "Arduino.h"
-
-struct TargetLocation {
-  float x;
-  float y;
-  float z;
-  float distance;
-};
-
-struct Target {
-  int targetID;
-};
+#include "Pixy.h"
 
 class Vision {
 public:
-  Vision();
-  TargetLocation findTarget(Target target);
-
-// private:
-
+  Vision(Pixy pixy);
+  void init();
+  int get_x_pos();
+  
+private:
+  unsigned int _blocks;
+  Pixy _pixy;
 };
 
 #endif
