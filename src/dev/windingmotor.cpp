@@ -15,13 +15,9 @@ void WindingMotor::init() {
 }
 
 void WindingMotor::windBack() {
-  _setMotor(70, 0);
-  delay(1000);
-  _setMotor(0, 0);
-  delay(1000);
-  _setMotor(70, 1);
-  delay(1000);
-  _setMotor(0, 0);
+  _setMotor(255, 1);
+  delay(30000);
+  _setMotor(0, 1);
   delay(1000);
 }
 
