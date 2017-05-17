@@ -53,4 +53,3 @@ void Hopper::_loadUpdate() {
     is_reloading = 0;
   }
 }
-

@@ -1,7 +1,7 @@
 #include "driver.h"
 #include "vision.h"
 #include "dev/hopper.h"
-#include "mocks/distancesensormock.h"
+#include "dev/distancesensor.h"
 #include "dev/windingmotor.h"
 #include "vision.h"
 #include "driver.h"
@@ -20,12 +20,11 @@ int x_pos;
 // Set up driver
 Driver driver(2, 3);
 
-// Set up ultrasonic range sensors
-DistanceSensorMock safety_sensor(7);
-DistanceSensorMock winding_sensor(8);
+// Set up ultrasonic range sensor
+DistanceSensor safety_sensor(13);
 long safety_distance = 100;
-long winding_distance = 100;
 
+// Set up windback mechanism
 WindingMotor windingmotor(10, 9, 11);
 
 void setup() {
@@ -35,12 +34,14 @@ void setup() {
   windingmotor.init();
   vision.init();
   driver.init();
+  windingmotor.windBack();
 }
 
 void loop() {
   // Delay for timing
   delay(100);
-  Serial.println("loop");
+  safety_distance = 10; //safety_sensor.read();
+  Serial.println(safety_distance);
 
   // Get x position of target
   x_pos = vision.get_x_pos();
@@ -57,6 +58,7 @@ void loop() {
     if (hopper.is_loaded == 1) {
       driver.stop();
       Serial.println("Fire!");
+      windingmotor.windForward();
       hopper.is_loaded = 0;
     }
   } else {
@@ -68,10 +70,14 @@ void loop() {
     }
   }
 
-  if (hopper.is_loaded == 1) {
-    hopper.is_loaded = 0;
+  if (safety_distance <= 5) {
+    Serial.println("Avoiding obstacle");
+    driver.backward(0.6);
+    delay(3000);
+    driver.turn(COUNTERCLOCKWISE, 0.3);
+    delay(3000);
   }
-  
+
   // Reload the hopper if it is not loaded
   if (hopper.is_loaded == 0 && hopper.is_reloading == 0) {
     Serial.println("Reloading...");
@@ -80,5 +86,6 @@ void loop() {
 
   // Refresh devices as needed
   hopper.update();
+  windingmotor.update();
 }
 
