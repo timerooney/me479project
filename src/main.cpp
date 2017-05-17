@@ -40,6 +40,7 @@ void setup() {
 void loop() {
   // Delay for timing
   delay(100);
+  Serial.println("loop");
 
   // Get x position of target
   x_pos = vision.get_x_pos();
@@ -65,6 +66,10 @@ void loop() {
     } else {
       driver.stop();
     }
+  }
+
+  if (hopper.is_loaded == 1) {
+    hopper.is_loaded = 0;
   }
   
   // Reload the hopper if it is not loaded
