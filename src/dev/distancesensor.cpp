@@ -2,6 +2,7 @@
 #include "Servo.h"
 #include "distancesensor.h"
 
+// Declaration function
 DistanceSensor::DistanceSensor(int pingPin) {
   _pingPin = pingPin;
 }
