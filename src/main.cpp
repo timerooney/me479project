@@ -16,6 +16,10 @@ Pixy pixy;
 Vision vision(pixy);
 // Pixycam positions
 int x_pos;
+uint16_t size;
+uint16_t max_size = 18000;
+
+int shots_fired = 0;
 
 // Set up driver
 Driver driver(2, 3);
@@ -25,7 +29,7 @@ DistanceSensor safety_sensor(13);
 long safety_distance = 100;
 
 // Set up windback mechanism
-WindingMotor windingmotor(10, 9, 11);
+WindingMotor windingmotor(4, 5, 12);
 
 void setup() {
   Serial.begin(9600);
@@ -35,53 +39,73 @@ void setup() {
   vision.init();
   driver.init();
   windingmotor.windBack();
+  hopper.is_loaded = 1;
 }
 
 void loop() {
   // Delay for timing
   delay(100);
-  safety_distance = 10; //safety_sensor.read();
-  Serial.println(safety_distance);
+  safety_distance = safety_sensor.read();
 
   // Get x position of target
   x_pos = vision.get_x_pos();
-  Serial.println(x_pos);
+  size = vision.get_size();
 
   // Driver logic
-  if (x_pos < 160 && x_pos >= 0) {
-    driver.turn(COUNTERCLOCKWISE, 0.3);
-  } else if (x_pos > 200) {
-    driver.turn(CLOCKWISE, 0.3);
+  if (shots_fired > 2) {
+    driver.turn(CLOCKWISE, 0.2);
+    delay(4500);
+    driver.forward(0.2);
+    delay(30000);
+  }
+
+  if (size >= max_size) {
+    Serial.println(size);
+    Serial.println(max_size);
+    driver.stop();
+    Serial.println("Too big, stopping");
+  } else if (x_pos < 140 && x_pos >= 0) {
+    Serial.println("CCW turn");
+    driver.turn(COUNTERCLOCKWISE, 0.2);
+  } else if (x_pos > 220) {
+    Serial.println("CW turn");
+    driver.turn(CLOCKWISE, 0.2);
   } else if (x_pos >= 0) {
-    driver.forward(0.3);
-    // Fire if possible
-    if (hopper.is_loaded == 1) {
-      driver.stop();
-      Serial.println("Fire!");
-      windingmotor.windForward();
-      hopper.is_loaded = 0;
-    }
-  } else {
+    Serial.println("Forward");
+    driver.forward(0.2);
+  }
+  // Fire if possible
+  if (hopper.is_loaded == 1 && x_pos >= 140 && x_pos <= 220) {
+    Serial.println("Stopping because can fire");
+    driver.stop();
+    Serial.println("Fire!");
+    shots_fired += 1;
+    windingmotor.windForward();
+    hopper.is_loaded = 0;
+  }
+  
+  if (x_pos == -1) {
     // Search if more than 5 seconds have passed since the last time seen
     if (vision.last_seen_time < (millis() - 5000)) {
-      driver.turn(CLOCKWISE, 0.3);
+      driver.turn(CLOCKWISE, 0.2);
     } else {
       driver.stop();
     }
   }
 
-  if (safety_distance <= 5) {
+  if (safety_distance <= 10) {
     Serial.println("Avoiding obstacle");
     driver.backward(0.6);
     delay(3000);
-    driver.turn(COUNTERCLOCKWISE, 0.3);
+    driver.turn(COUNTERCLOCKWISE, 0.2);
     delay(3000);
   }
 
   // Reload the hopper if it is not loaded
-  if (hopper.is_loaded == 0 && hopper.is_reloading == 0) {
+  if (hopper.is_loaded == 0 && hopper.is_reloading == 0 && windingmotor._windState == 0) {
     Serial.println("Reloading...");
     hopper.load();
+    windingmotor.windBack();
   }
 
   // Refresh devices as needed
