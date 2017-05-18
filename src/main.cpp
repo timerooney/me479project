@@ -45,19 +45,20 @@ void setup() {
 void loop() {
   // Delay for timing
   delay(100);
-  safety_distance = safety_sensor.read();
+  safety_distance = 15;//safety_sensor.read();
 
   // Get x position of target
   x_pos = vision.get_x_pos();
   size = vision.get_size();
 
-  // Driver logic
-  if (shots_fired > 2) {
-    driver.turn(CLOCKWISE, 0.2);
-    delay(4500);
-    driver.forward(0.2);
-    delay(30000);
-  }
+   Driver logic
+   if (shots_fired == 3) {
+     driver.turn(CLOCKWISE, 0.7);
+     delay(4500);
+     shots_fired += 1;
+   } else if (shots_fired > 3) {
+     driver.forward(0.7);
+   }
 
   if (size >= max_size) {
     Serial.println(size);
@@ -66,13 +67,13 @@ void loop() {
     Serial.println("Too big, stopping");
   } else if (x_pos < 140 && x_pos >= 0) {
     Serial.println("CCW turn");
-    driver.turn(COUNTERCLOCKWISE, 0.2);
+    driver.turn(COUNTERCLOCKWISE, 0.7);
   } else if (x_pos > 220) {
     Serial.println("CW turn");
-    driver.turn(CLOCKWISE, 0.2);
+    driver.turn(CLOCKWISE, 0.7);
   } else if (x_pos >= 0) {
     Serial.println("Forward");
-    driver.forward(0.2);
+    driver.forward(0.7);
   }
   // Fire if possible
   if (hopper.is_loaded == 1 && x_pos >= 140 && x_pos <= 220) {
@@ -87,7 +88,7 @@ void loop() {
   if (x_pos == -1) {
     // Search if more than 5 seconds have passed since the last time seen
     if (vision.last_seen_time < (millis() - 5000)) {
-      driver.turn(CLOCKWISE, 0.2);
+      driver.turn(CLOCKWISE, 0.7);
     } else {
       driver.stop();
     }
@@ -97,7 +98,7 @@ void loop() {
     Serial.println("Avoiding obstacle");
     driver.backward(0.6);
     delay(3000);
-    driver.turn(COUNTERCLOCKWISE, 0.2);
+    driver.turn(COUNTERCLOCKWISE, 0.7);
     delay(3000);
   }
 

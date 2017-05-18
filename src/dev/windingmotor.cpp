@@ -18,14 +18,14 @@ void WindingMotor::windBack() {
   Serial.println("Winding back");
   _setMotor(255, 0);
   _windState = -1;
-  _stopTime = millis() + 10000;
+  _stopTime = millis() + 5000;
 }
 
 void WindingMotor::windForward() {
   Serial.println("Winding forward");
   _setMotor(255, 1);
   _windState = 1;
-  _stopTime = millis() + 5000;
+  _stopTime = millis() + 3000;
 }
 
 void WindingMotor::stop() {
